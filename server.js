@@ -4,8 +4,8 @@ const WebSocket = require('ws');
 const demoToken = process.env.TOKEN;
 
 const host = '129.146.147.219:8443';
-const ipaddr = process.env.OPENSHIFT_NODEJS_IP || "127.0.0.1";
-const port = process.env.OPENSHIFT_NODEJS_PORT || 3000
+const ipaddr = process.env.PORT || process.env.OPENSHIFT_NODEJS_IP || "127.0.0.1";
+const port = process.env.IP || process.env.OPENSHIFT_NODEJS_PORT || 3000
 
 console.log(ipaddr);
 console.log(port);
