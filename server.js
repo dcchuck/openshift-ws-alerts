@@ -28,7 +28,7 @@ server.listen(port, ipaddr, () => {
         const messageData = JSON.parse(message.data);
         const appName = messageData.object.metadata.labels.app;
         if (messageData.object.status.phase === "Complete" && messageData.type === "MODIFIED") {
-            wsServer.broadcast({ appName: appName };
+            wsServer.broadcast({ appName: appName });
         }
     };
 })
