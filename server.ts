@@ -49,6 +49,7 @@ server.listen(port, () => {
         const requestIp = req.connection.remoteAddress;
         console.log(`Connected IP: ${requestIp}`);
         ws.on('message', (m) => {
+            console.log(`Received Message`)
             const connectionMessage: ISubscriptionMessage = JSON.parse(m.toString());
             try {
                 if (connectionMessage.action === 'subscribe') {
@@ -63,8 +64,8 @@ server.listen(port, () => {
         });
     });
 
-    const ws = new WebSocket(`wss://${appHost}/oapi/v1/watch/namespaces/${namespace}/builds?access_token=${accessToken}`, { origin: `https://${appHost}` });
-    console.log(ws);
+    // const ws = new WebSocket(`wss://${appHost}/oapi/v1/watch/namespaces/${namespace}/builds?access_token=${accessToken}`, { origin: `https://${appHost}` });
+    // console.log(ws);
     // wsServer.broadcast = function broadcast(data: string) {
     //     wsServer.clients.forEach(function each(client) {
     //         if (client.readyState === WebSocket.OPEN) {
