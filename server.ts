@@ -27,26 +27,44 @@ const wsServer = new WebSocket.Server({ server: server });
 // The user will
 interface ISubscriptionMessage {
     action: 'subscribe' | 'unsubscribe';
-    payload: {
-        eventName: string;
-        namespace?: string;
-    }
+    payload: ISubscriptionMessagePayload;
+}
+
+interface ISubscriptionMessagePayload {
+    eventName: string;
+    namespace?: string;
+}
+
+function addSubscription(requestIp: string, payload: ISubscriptionMessagePayload) {
+    console.log('Add subscription called')
+}
+
+function removeSubscription(requestIp: string, payload: ISubscriptionMessagePayload) {
+    console.log('Remove subscription called')
 }
 
 server.listen(port, () => {
     console.log(`Listening on Port ${port}`);
-    wsServer.on('connection', (connectionObject) => {
-        console.log(connectionObject);
-        connectionObject.on('message', (m) => {
-            const translatedObject = JSON.parse(m.toString());
-            console.log(translatedObject);
-            console.log(m);
-            console.log('the connection object aflkjsd')
-        })
+    wsServer.on('connection', (ws, req) => {
+        const requestIp = req.connection.remoteAddress;
+        console.log(`Connected IP: ${requestIp}`);
+        ws.on('message', (m) => {
+            const connectionMessage: ISubscriptionMessage = JSON.parse(m.toString());
+            try {
+                if (connectionMessage.action === 'subscribe') {
+                    addSubscription(requestIp, connectionMessage.payload);
+
+                } else if (connectionMessage.action === 'unsubscribe') {
+                    removeSubscription(requestIp, connectionMessage.payload);
+                }
+            } catch (e) {
+                console.log(`Error parsing connection message ${e}`);
+            }
+        });
     });
 
-    // const ws = new WebSocket(`wss://${appHost}/oapi/v1/watch/namespaces/${namespace}/builds?access_token=${accessToken}`, { origin: `https://${appHost}` });
-    // console.log(ws);
+    const ws = new WebSocket(`wss://${appHost}/oapi/v1/watch/namespaces/${namespace}/builds?access_token=${accessToken}`, { origin: `https://${appHost}` });
+    console.log(ws);
     // wsServer.broadcast = function broadcast(data: string) {
     //     wsServer.clients.forEach(function each(client) {
     //         if (client.readyState === WebSocket.OPEN) {

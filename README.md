@@ -15,3 +15,7 @@ The OpenShift REST APIs allow you to control your OpenShift instance. In this ca
 ## Relevant Documentation
 
 * You can emulate this pattern to retrieve other information about your OpenShift instance (also cluster wide, not just namespace specific). The OpenShift REST API documentation can be found [here](https://docs.openshift.com/container-platform/3.5/rest_api/index.html).
+
+### TODO
+
+* Formalize built step. So far I've added the build tools to the dependencies so the container can find typescript.
