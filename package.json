@@ -18,5 +18,10 @@
         "ts-lint": "^4.5.1",
         "typescript": "^2.9.2"
     },
-    "devDependencies": {}
+    "devDependencies": {
+        "@types/expect": "^1.20.3",
+        "@types/mocha": "^5.2.4",
+        "mocha": "^5.2.0",
+        "ts-mocha": "^1.2.0"
+    }
 }

@@ -24,11 +24,19 @@ function addSubscription(requestIp, payload) {
 function removeSubscription(requestIp, payload) {
     console.log('Remove subscription called');
 }
+const eventMap = {
+    builds: {
+        namespaced: (namespace) => `/oapi/v1/watch/namespaces/${namespace}/builds`,
+        all: ``
+    }
+};
 server.listen(port, () => {
     console.log(`Listening on Port ${port}`);
     wsServer.on('connection', (ws, req) => {
         const requestIp = req.connection.remoteAddress;
+        console.log(`Connected IP: ${requestIp}`);
         ws.on('message', (m) => {
+            console.log(`Received Message`);
             const connectionMessage = JSON.parse(m.toString());
             try {
                 if (connectionMessage.action === 'subscribe') {

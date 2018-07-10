@@ -43,6 +43,13 @@ function removeSubscription(requestIp: string, payload: ISubscriptionMessagePayl
     console.log('Remove subscription called')
 }
 
+const eventMap = {
+    builds: {
+        namespaced: (namespace: string): string => `/oapi/v1/watch/namespaces/${namespace}/builds`,
+        all: ``
+    }
+}
+
 server.listen(port, () => {
     console.log(`Listening on Port ${port}`);
     wsServer.on('connection', (ws, req) => {
