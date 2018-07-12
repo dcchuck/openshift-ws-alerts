@@ -17,6 +17,7 @@
     ],
     "include": [
         "./server.ts",
-        "./test/**/*"
+        "./test/**/*",
+        "./src/**/*"
     ]
 }
