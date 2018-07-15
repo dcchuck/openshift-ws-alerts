@@ -51,22 +51,22 @@ server.listen(port, () => {
             }
         });
     });
-    // const ws = new WebSocket(`wss://${appHost}/oapi/v1/watch/namespaces/${namespace}/builds?access_token=${accessToken}`, { origin: `https://${appHost}` });
-    // console.log(ws);
-    // wsServer.broadcast = function broadcast(data: string) {
-    //     wsServer.clients.forEach(function each(client) {
-    //         if (client.readyState === WebSocket.OPEN) {
-    //             client.send(data);
-    //         }
-    //     });
-    // };
-    // ws.onmessage = (message) => {
-    //     console.log('message received!')
-    //     const messageData = JSON.parse(message.data);
-    //     const appName = messageData.object.metadata.labels.app;
-    //     if (messageData.object.status.phase === "Complete" && messageData.type === "MODIFIED") {
-    //         wsServer.broadcast(JSON.stringify({ appName: appName }));
-    //     }
-    // };
+    const ws = new WebSocket(`wss://${appHost}/oapi/v1/watch/namespaces/${namespace}/builds?access_token=${accessToken}`, { origin: `https://${appHost}` });
+    console.log(ws);
+    wsServer.broadcast = function broadcast(data) {
+        wsServer.clients.forEach(function each(client) {
+            if (client.readyState === WebSocket.OPEN) {
+                client.send(data);
+            }
+        });
+    };
+    ws.onmessage = (message) => {
+        console.log('message received!');
+        const messageData = JSON.parse(message.data);
+        const appName = messageData.object.metadata.labels.app;
+        if (messageData.object.status.phase === "Complete" && messageData.type === "MODIFIED") {
+            wsServer.broadcast(JSON.stringify({ appName: appName }));
+        }
+    };
 });
 //# sourceMappingURL=server.js.map
