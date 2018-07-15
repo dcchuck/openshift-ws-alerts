@@ -5,8 +5,7 @@
     "main": "index.js",
     "scripts": {
         "test": "tsc && ts-mocha",
-        "tsc": "tsc",
-        "start": "tsc && node server.js"
+        "tsc": "tsc"
     },
     "keywords": [],
     "author": "",
