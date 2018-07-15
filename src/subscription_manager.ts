@@ -1,4 +1,4 @@
-import { ISubscriptionMessage, ISubscriptionMessagePayload } from '../server';
+import { ISubscriptionMessage } from '../server';
 
 export default class SubscriptionManager {
     public subscriptions: any[];
